@@ -26,6 +26,7 @@ const server = new ApolloServer({
 
 const startApolloServer = async () => {
   await server.start();
+  app.use(cors());
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
@@ -33,7 +34,6 @@ const startApolloServer = async () => {
   app.use('/graphql', expressMiddleware(server));
   app.use(routes);
 
-  app.use(cors());
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
