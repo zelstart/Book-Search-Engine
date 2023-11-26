@@ -2,7 +2,7 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
-
+const cors = require('cors')
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
@@ -18,6 +18,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
+  cors: {
+    origin: '*', // Allow all origins
+    credentials: true // Credentials are allowed
+  }
 });
 
 const startApolloServer = async () => {
@@ -28,6 +32,8 @@ const startApolloServer = async () => {
 
   app.use('/graphql', expressMiddleware(server));
   app.use(routes);
+
+  app.use(cors());
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === 'production') {
