@@ -1,4 +1,4 @@
-const typeDefs =`
+const typeDefs = `
 type Query {
     users: [User]
     user(username: String!): User
@@ -20,6 +20,15 @@ type User {
     savedBooks: [Book]
 }
 
+input BookInput {
+    bookId: ID!
+    authors: [String]!
+    description: String!
+    title: String!
+    image: String
+    link: String
+}
+
 type Book {
     bookId: ID!
     authors: [String]
@@ -34,3 +43,4 @@ type Auth {
     user: User
 }
 `
+module.exports = typeDefs;
